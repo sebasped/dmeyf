@@ -54,12 +54,12 @@ prediccion  <- predict( modelo, dapply , type = "prob") #aplico el modelo
 
 dapply[ , prob_baja2 := prediccion[, "BAJA+2"] ]
 # dapply[ , prob_baja1 := prediccion[, "BAJA+1"] ]
-dapply[ , Predicted  := as.numeric(prob_baja2 > 0.025) ]
-
+# dapply[ , Predicted  := as.numeric(prob_baja2 > 0.025) ]
+dapply[ , Predicted  := as.numeric(prob_baja2 > -1) ] #para que todos sean 1
 # dapply[ , Predicted  := as.numeric(prob_baja2 > 0.025 & prob_baja2 > prob_baja1 ) ]
 
 
 entrega  <- dapply[   , list(numero_de_cliente, Predicted) ] #genero la salida
 
 #genero el archivo para Kaggle
-fwrite( entrega, file="./kaggle/K241_-2_10_2_10.csv", sep="," )
+fwrite( entrega, file="./kaggle/K110_todos1.csv", sep="," )
