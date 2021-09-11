@@ -20,7 +20,7 @@ require("mlrMBO")
 
 
 #defino la carpeta donde trabajo
-setwd( "~/buckets/b1/crudoB/"  )
+setwd("~/dataScience/maestriaDC/2021/DM_en_EyF_2021cuat2/")  #Establezco el Working Directory
 
 
 kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es para continuar procesando
@@ -36,7 +36,7 @@ hs  <- makeParamSet(
           makeIntegerParam("min.node.size" ,    lower=  1L  , upper=  500L),
           makeIntegerParam("mtry" ,             lower=  2L  , upper=   50L))
 
-ksemilla_azar  <- 102191  #Aqui poner la propia semilla
+ksemilla_azar  <- 474077  #Aqui poner la propia semilla
 #------------------------------------------------------------------------------
 #Funcion que lleva el registro de los experimentos
 
