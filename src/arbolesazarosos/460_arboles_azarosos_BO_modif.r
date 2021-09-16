@@ -19,7 +19,7 @@ require("mlrMBO")
 
 
 #defino la carpeta donde trabajo
-setwd("~/dataScience/maestriaDC/2021/DM_en_EyF_2021cuat2/")  #Establezco el Working Directory
+setwd("/home/sebas/DM_EyF/")  #Establezco el Working Directory
 
 
 kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es para continuar procesando
@@ -27,7 +27,7 @@ kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es pa
 kscript           <- "460_arboles_azarosos_BO"
 karch_generacion  <- "./datasetsOri/paquete_premium_202009.csv"
 karch_aplicacion  <- "./datasetsOri/paquete_premium_202011.csv"
-kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  999999   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 hs  <- makeParamSet(
           makeNumericParam("cp"       ,         lower= -1   , upper=    0.1),
@@ -158,7 +158,8 @@ ArbolesAzarosos_CrossValidation  <- function( data, param, pcampos_buenos, qfold
 
 EstimarGanancia_ArbolesAzarosos  <- function( x )
 {
-   campos_buenos  <- setdiff(  colnames(dataset) ,  c("clase_ternaria") )
+   # campos_buenos  <- setdiff(  colnames(dataset) ,  c("clase_ternaria") )
+   campos_buenos  <- setdiff(  colnames(dataset) ,  c("clase_ternaria", "internet", "mcajeros_propios_descuentos", "mtarjeta_visa_descuentos", "mtarjeta_master_descuentos", "tmobile_app", "cmobile_app_trx", "Master_madelantodolares") )
    
    GLOBAL_iteracion  <<-  GLOBAL_iteracion + 1
 

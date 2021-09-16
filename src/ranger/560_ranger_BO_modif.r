@@ -20,7 +20,7 @@ require("mlrMBO")
 
 
 #defino la carpeta donde trabajo
-setwd("~/dataScience/maestriaDC/2021/DM_en_EyF_2021cuat2/")  #Establezco el Working Directory
+setwd("/home/sebas/DM_EyF/")  #Establezco el Working Directory
 
 
 kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es para continuar procesando
@@ -28,7 +28,7 @@ kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es pa
 kscript           <- "560_ranger_BO"
 karch_generacion  <- "./datasetsOri/paquete_premium_202009.csv"
 karch_aplicacion  <- "./datasetsOri/paquete_premium_202011.csv"
-kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  99999   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 hs  <- makeParamSet(
           makeIntegerParam("num.trees" ,        lower=  2L  , upper=  500L),  #la letra L al final significa ENTERO
@@ -98,7 +98,8 @@ ranger_Simple  <- function( fold_test, pdata, param )
 
   set.seed(ksemilla_azar)
 
-  modelo  <- ranger( formula= "clase_binaria ~ .",
+  # modelo  <- ranger( formula= "clase_binaria ~ .",
+  modelo  <- ranger( formula= "clase_binaria ~ . -internet -mcajeros_propios_descuentos -mtarjeta_visa_descuentos -mtarjeta_master_descuentos",  # -tmobile_app", "cmobile_app_trx", "Master_madelantodolares
                      data=  pdata[ fold!= fold_test], 
                      probability=   TRUE,  #para que devuelva las probabilidades
                      num.trees=     param$num.trees,
@@ -154,7 +155,8 @@ EstimarGanancia_ranger  <- function( x )
 
      set.seed(ksemilla_azar)
 
-     modelo  <- ranger( formula= "clase_binaria ~ .",
+     # modelo  <- ranger( formula= "clase_binaria ~ .",
+     modelo  <- ranger( formula= "clase_binaria ~ . -internet -mcajeros_propios_descuentos -mtarjeta_visa_descuentos -mtarjeta_master_descuentos",  # -tmobile_app", "cmobile_app_trx", "Master_madelantodolares
                         data=  dataset, 
                         probability=   TRUE,  #para que devuelva las probabilidades
                         num.trees=     x$num.trees,

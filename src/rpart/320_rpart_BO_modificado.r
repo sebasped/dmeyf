@@ -22,7 +22,7 @@ require("mlrMBO")
 switch ( Sys.info()[['sysname']],
          Windows = { directory.root   <-  "M:\\" },   #Microsoft Windows
          Darwin  = { directory.root   <-  "~/dm/" },  #Apple MAC
-         Linux   = { directory.root   <-  "~/dataScience/maestriaDC/2021/DM_en_EyF_2021cuat2/" }  #Entorno Google Cloud
+         Linux   = { directory.root   <-  "/home/sebas/DM_EyF/" }  #Entorno Google Cloud
        )
 #defino la carpeta donde trabajo
 setwd( directory.root )
@@ -127,7 +127,7 @@ ArbolesCrossValidation  <- function( data, param, qfolds, pagrupa, semilla )
                           seq(qfolds), # 1 2 3 4 5  
                           MoreArgs= list( data, param), 
                           SIMPLIFY= FALSE,
-                          mc.cores= 5 )   #se puede subir a 5 si posee Linux o Mac OS
+                          mc.cores= 8 )   #se puede subir a 5 si posee Linux o Mac OS
 
   data[ , fold := NULL ]
   #devuelvo la primer ganancia y el promedio
