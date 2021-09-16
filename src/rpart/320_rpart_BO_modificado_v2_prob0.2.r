@@ -36,10 +36,10 @@ karch_aplicacion  <- "./datasetsOri/paquete_premium_202011.csv"
 kBO_iter    <-  999999   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 hs  <- makeParamSet(
-          makeNumericParam("cp"       , lower= -1   , upper=    0.1),
-          makeIntegerParam("minsplit" , lower=  1L  , upper= 8000L),  #la letra L al final significa ENTERO
-          makeIntegerParam("minbucket", lower=  1L  , upper= 2000L),
-          makeIntegerParam("maxdepth" , lower=  3L  , upper=   20L),
+          makeNumericParam("cp"       , lower= -3   , upper=    0.1),
+          makeIntegerParam("minsplit" , lower=  1L  , upper= 20000L),  #la letra L al final significa ENTERO
+          makeIntegerParam("minbucket", lower=  1L  , upper= 10000L),
+          makeIntegerParam("maxdepth" , lower=  3L  , upper=   30L),
           forbidden = quote( minbucket > 0.5*minsplit ) )
 
 
@@ -102,7 +102,7 @@ particionar  <- function( data, division, agrupa="", campo="fold", start=1, seed
 ArbolSimple  <- function( fold_test, data, param )
 {
   #genero el modelo
-  modelo  <- rpart("clase_ternaria ~ .", 
+  modelo  <- rpart("clase_ternaria ~ .-internet -mtarjeta_visa_descuentos -mtarjeta_master_descuentos -tmobile_app -cmobile_app_trx -Master_madelantodolares", 
                    data= data[ fold != fold_test, ],
                    xval= 0,
                    control= param )
@@ -112,7 +112,7 @@ ArbolSimple  <- function( fold_test, data, param )
 
   prob_baja2  <- prediccion[, "BAJA+2"]
 
-  ganancia_testing  <- sum(  data[ fold==fold_test ][ prob_baja2 >0.025,  ifelse( clase_ternaria=="BAJA+2", 48750, -1250 ) ] )
+  ganancia_testing  <- sum(  data[ fold==fold_test ][ prob_baja2 >0.02,  ifelse( clase_ternaria=="BAJA+2", 48750, -1250 ) ] )
 
   return( ganancia_testing )
 }
@@ -127,7 +127,7 @@ ArbolesCrossValidation  <- function( data, param, qfolds, pagrupa, semilla )
                           seq(qfolds), # 1 2 3 4 5  
                           MoreArgs= list( data, param), 
                           SIMPLIFY= FALSE,
-                          mc.cores= 8 )   #se puede subir a 5 si posee Linux o Mac OS
+                          mc.cores= 5 )   #se puede subir a 5 si posee Linux o Mac OS
 
   data[ , fold := NULL ]
   #devuelvo la primer ganancia y el promedio
