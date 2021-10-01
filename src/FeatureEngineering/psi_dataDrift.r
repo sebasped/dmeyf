@@ -35,11 +35,18 @@ for( campo in  campos_buenos )
 {
   
   psi <- get_psi(dat = as.data.frame(datasetA), dat_test = as.data.frame(datasetB), x = campo)#,occur_time = "apply_date", bins_no = TRUE)
+  
   print(psi)
   fwrite( psi, file="./work/psi_dataDrift.csv", sep=",", append = TRUE )
-  if (psi[1,8]>=0.8) {
+  
+  if (psi[1,8]>=0.1) {
     psi_reducido <- psi[1,c(1,8)]
-    fwrite( psi_reducido, file="./work/psi_dataDrift_resumido.csv", sep=",", append = TRUE )
+    fwrite( psi_reducido, file="./work/psi_dataDrift_resumido_unstableOmas.csv", sep=",", append = TRUE )
+    
+  }
+  if ( 0.02 <= psi[1,8] & psi[1,8] < 0.1) {
+    psi_reducido <- psi[1,c(1,8)]
+    fwrite( psi_reducido, file="./work/psi_dataDrift_resumido_stable.csv", sep=",", append = TRUE )
     
   }
   
