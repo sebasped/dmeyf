@@ -12,8 +12,10 @@ setwd("~/dataScience/maestriaDC/2021/DM_en_EyF_2021cuat2/")  #Establezco el Work
 datasetA  <- fread( "./datasetsOri/paquete_premium_202009.csv" )
 datasetB  <- fread( "./datasetsOri/paquete_premium_202011.csv" )
 
+campos_para_sacar <- c("numero_de_cliente","foto_mes","clase_ternaria" )
+# campos_para_sacar <- NULL
 
-campos_buenos  <- setdiff(  colnames( datasetA),  c("numero_de_cliente","foto_mes","clase_ternaria" ) )
+campos_buenos  <- setdiff(  colnames( datasetA), campos_para_sacar )
 
 
 # psi <- get_psi(dat = as.data.frame(datasetA), dat_test = as.data.frame(datasetB), x = campos_buenos[1])#,occur_time = "apply_date", bins_no = TRUE)

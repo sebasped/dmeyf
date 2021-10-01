@@ -42,7 +42,7 @@ kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es pa
 kscript           <- "672_lgb_binaria2"
 karch_generacion  <- "./datasetsOri/paquete_premium_202009.csv"
 karch_aplicacion  <- "./datasetsOri/paquete_premium_202011.csv"
-kBO_iter    <-  999999   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 #Aqui se cargan los hiperparametros
 hs <- makeParamSet( 
@@ -54,7 +54,9 @@ hs <- makeParamSet(
         )
 
 # campos_malos  <- c( "ccajas_transacciones", "Master_mpagominimo" )   #aqui se deben cargar todos los campos culpables del Data Drifting
-campos_malos  <- c( "internet", "mcajeros_propios_descuentos", "mtarjeta_visa_descuentos", "mtarjeta_master_descuentos", "tmobile_app", "cmobile_app_trx", "Master_Finiciomora", "Master_madelantodolares", "Visa_Finiciomora" )   #aqui se deben cargar todos los campos culpables del Data Drifting
+# campos_malos  <- c( "internet", "mcajeros_propios_descuentos", "mtarjeta_visa_descuentos", "mtarjeta_master_descuentos", "tmobile_app", "cmobile_app_trx", "Master_Finiciomora", "Master_madelantodolares", "Visa_Finiciomora" )   #aqui se deben cargar todos los campos culpables del Data Drifting
+
+campos_malos <- NULL
 
 ksemilla_azar  <- 474077  #Aqui poner la propia semilla
 #------------------------------------------------------------------------------
@@ -294,6 +296,6 @@ if(!file.exists(kbayesiana)) {
 #        wait=FALSE )
 
 
-quit( save="no" )
+# quit( save="no" )
 
 
