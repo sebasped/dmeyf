@@ -42,7 +42,7 @@ kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es pa
 kscript           <- "672_lgb_binaria2"
 karch_generacion  <- "./datasetsOri/paquete_premium_202009.csv"
 karch_aplicacion  <- "./datasetsOri/paquete_premium_202011.csv"
-kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  100   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 #Aqui se cargan los hiperparametros
 hs <- makeParamSet( 
@@ -56,7 +56,8 @@ hs <- makeParamSet(
 # campos_malos  <- c( "ccajas_transacciones", "Master_mpagominimo" )   #aqui se deben cargar todos los campos culpables del Data Drifting
 # campos_malos  <- c( "internet", "mcajeros_propios_descuentos", "mtarjeta_visa_descuentos", "mtarjeta_master_descuentos", "tmobile_app", "cmobile_app_trx", "Master_Finiciomora", "Master_madelantodolares", "Visa_Finiciomora" )   #aqui se deben cargar todos los campos culpables del Data Drifting
 
-campos_malos <- NULL
+# campos_malos <- NULL
+campos_malos <- c("Master_fultimo_cierre", "Visa_fultimo_cierre")
 
 ksemilla_azar  <- 474077  #Aqui poner la propia semilla
 #------------------------------------------------------------------------------
@@ -269,7 +270,7 @@ obj.fun  <- makeSingleObjectiveFunction(
               has.simple.signature = FALSE   #paso los parametros en una lista
              )
 
-ctrl  <- makeMBOControl( save.on.disk.at.time= 600,  save.file.path= kbayesiana)  #se graba cada 600 segundos
+ctrl  <- makeMBOControl( save.on.disk.at.time= 120,  save.file.path= kbayesiana)  #se graba cada 600 segundos
 ctrl  <- setMBOControlTermination(ctrl, iters= kBO_iter )   #cantidad de iteraciones
 ctrl  <- setMBOControlInfill(ctrl, crit= makeMBOInfillCritEI() )
 

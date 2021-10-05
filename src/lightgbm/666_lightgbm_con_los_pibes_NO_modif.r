@@ -36,7 +36,7 @@ modelo  <- lightgbm( data= dtrain,
                                    max_bin= 15,
                                    num_iterations = 100, #cant. árboles
                                    min_data_in_leaf= 4000,
-                                   learning_rate= 0.048 )  )
+                                   learning_rate= 0.05 )  )
 
 
 #cargo el dataset donde aplico el modelo
