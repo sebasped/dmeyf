@@ -57,7 +57,17 @@ hs <- makeParamSet(
 # campos_malos  <- c( "internet", "mcajeros_propios_descuentos", "mtarjeta_visa_descuentos", "mtarjeta_master_descuentos", "tmobile_app", "cmobile_app_trx", "Master_Finiciomora", "Master_madelantodolares", "Visa_Finiciomora" )   #aqui se deben cargar todos los campos culpables del Data Drifting
 
 # campos_malos <- NULL
-campos_malos <- c("Master_fultimo_cierre", "Visa_fultimo_cierre")
+# campos_malos <- c("Master_fultimo_cierre", "Visa_fultimo_cierre")
+# campos_malos <- c("Master_fultimo_cierre","Visa_fultimo_cierre","cmobile_app_trx","internet","tmobile_app")
+# campos_malos <- c("Master_fultimo_cierre","Visa_fultimo_cierre","cmobile_app_trx","internet","tmobile_app",
+                  # "ccajeros_propios_descuentos","mcajeros_propios_descuentos",
+                  # "ctarjeta_visa_descuentos","mtarjeta_visa_descuentos",
+                  # "ctarjeta_master_descuentos","mtarjeta_master_descuentos")
+campos_malos <- c("Master_fultimo_cierre","Visa_fultimo_cierre","cmobile_app_trx","internet","tmobile_app",
+                  "ccajeros_propios_descuentos","mcajeros_propios_descuentos",
+                  "ctarjeta_visa_descuentos","mtarjeta_visa_descuentos",
+                  "ctarjeta_master_descuentos","mtarjeta_master_descuentos",
+                  "Visa_mconsumosdolares","Visa_mpagado")
 
 ksemilla_azar  <- 474077  #Aqui poner la propia semilla
 #------------------------------------------------------------------------------
