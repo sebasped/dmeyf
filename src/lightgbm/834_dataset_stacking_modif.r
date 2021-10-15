@@ -16,7 +16,8 @@ version  <- "v001"  #cambiar cada vez, asi se tiene versionado del dataset
 
 dataset  <- fread( "./datasets/dataset_epic_simple_v007.csv.gz" )
 dataset  <- copy(  dataset[  , c("numero_de_cliente","foto_mes","clase_ternaria"),  with=FALSE] )
-# dataset  <- copy(  dataset ) #usa TODAS las columnas: Ídem quitar la línea 18.
+# dataset  <- copy(  dataset ) #usa TODAS las columnas: Ídem quitar la línea 18. Los modelitos van a 
+#estar arriba en el importance
 gc()
 
 

@@ -63,11 +63,16 @@ hs <- makeParamSet(
                   # "ccajeros_propios_descuentos","mcajeros_propios_descuentos",
                   # "ctarjeta_visa_descuentos","mtarjeta_visa_descuentos",
                   # "ctarjeta_master_descuentos","mtarjeta_master_descuentos")
+# campos_malos <- c("Master_fultimo_cierre","Visa_fultimo_cierre","cmobile_app_trx","internet","tmobile_app",
+                  # "ccajeros_propios_descuentos","mcajeros_propios_descuentos",
+                  # "ctarjeta_visa_descuentos","mtarjeta_visa_descuentos",
+                  # "ctarjeta_master_descuentos","mtarjeta_master_descuentos",
+                  # "Visa_mconsumosdolares","Visa_mpagado")
 campos_malos <- c("Master_fultimo_cierre","Visa_fultimo_cierre","cmobile_app_trx","internet","tmobile_app",
                   "ccajeros_propios_descuentos","mcajeros_propios_descuentos",
                   "ctarjeta_visa_descuentos","mtarjeta_visa_descuentos",
                   "ctarjeta_master_descuentos","mtarjeta_master_descuentos",
-                  "Visa_mconsumosdolares","Visa_mpagado")
+                  "cforex_sell","mforex_sell","cforex","tpaquete1")
 
 ksemilla_azar  <- 474077  #Aqui poner la propia semilla
 #------------------------------------------------------------------------------
