@@ -10,11 +10,13 @@ gc()             #garbage collection
 
 require("data.table")
 
-setwd("~/buckets/b1/crudoB/" )
+# setwd("~/buckets/b1/crudoB/" )
+setwd("~/dataScience/maestriaDC/2021/DM_en_EyF_2021cuat2/")  #Establezco el Working Directory
+
 
 version  <- "v001"  #cambiar cada vez, asi se tiene versionado del dataset
 
-dataset  <- fread( "./datasets/dataset_epic_simple_v007.csv.gz" )
+dataset  <- fread( "./datasets/dataset_epic_simple_v001.csv.gz" )
 dataset  <- copy(  dataset[  , c("numero_de_cliente","foto_mes","clase_ternaria"),  with=FALSE] )
 # dataset  <- copy(  dataset ) #usa TODAS las columnas: Ídem quitar la línea 18. Los modelitos van a 
 #estar arriba en el importance

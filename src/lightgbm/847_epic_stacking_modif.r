@@ -35,7 +35,8 @@ require("mlrMBO")
 switch ( Sys.info()[['sysname']],
          Windows = { directory.root  <-  "M:\\" },   #Windows
          Darwin  = { directory.root  <-  "~/dm/" },  #Apple MAC
-         Linux   = { directory.root  <-  "~/buckets/b1/crudoB/" } #Google Cloud
+         # Linux   = { directory.root  <-  "~/buckets/b1/crudoB/" } #Google Cloud
+         Linux   = { directory.root  <-  "~/dataScience/maestriaDC/2021/DM_en_EyF_2021cuat2/"  } 
        )
 #defino la carpeta donde trabajo
 setwd( directory.root )
@@ -46,7 +47,7 @@ kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es pa
 
 kscript         <- "847_epic_stacking"
 
-karch_dataset    <- "./datasets/dataset_stacking_v007.csv.gz"   #este dataset se genero en el script 812_dataset_epic.r
+karch_dataset    <- "./datasets/dataset_stacking_v001.csv.gz"   #este dataset se genero en el script 812_dataset_epic.r
 
 kapply_mes       <- c(202011)  #El mes donde debo aplicar el modelo
 
@@ -469,7 +470,7 @@ if(!file.exists(kbayesiana)) {
 
 
 #apagado de la maquina virtual, pero NO se borra
-system( "sleep 10  &&  sudo shutdown -h now", wait=FALSE)
+# system( "sleep 10  &&  sudo shutdown -h now", wait=FALSE)
 
 #suicidio,  elimina la maquina virtual directamente
 #system( "sleep 10  && 
@@ -479,6 +480,6 @@ system( "sleep 10  &&  sudo shutdown -h now", wait=FALSE)
 #        wait=FALSE )
 
 
-quit( save="no" )
+# quit( save="no" )
 
 

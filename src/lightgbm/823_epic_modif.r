@@ -62,14 +62,14 @@ kgen_mes_hasta    <- 202009  #Obviamente, solo puedo entrenar hasta 202011
 kgen_mes_desde    <- 202009
 
 
-kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  10000   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 #Aqui se cargan los hiperparametros
 hs <- makeParamSet( 
          makeNumericParam("learning_rate",    lower=    0.02 , upper=    0.1),
-         makeNumericParam("feature_fraction", lower=    0.1  , upper=    0.99),
-         makeNumericParam("bagging_fraction", lower=    0.1  , upper=    0.99),
-         makeIntegerParam("bagging_freq",      lower=  1L   , upper= 50L),
+         makeNumericParam("feature_fraction", lower=    0.1  , upper=    1),
+         # makeNumericParam("bagging_fraction", lower=    0.1  , upper=    0.99),
+         # makeIntegerParam("bagging_freq",      lower=  1L   , upper= 50L),
          makeIntegerParam("min_data_in_leaf", lower=  100L   , upper= 8000L),
          makeIntegerParam("num_leaves",       lower=    8L   , upper= 1024L),
          makeNumericParam("lambda_l1",        lower=    0.0  , upper=    100.0),
@@ -304,10 +304,11 @@ EstimarGanancia_lightgbm  <- function( x )
                           min_gain_to_split= 0.0, #por ahora, lo dejo fijo
                           # lambda_l1= 0.0,         #por ahora, lo dejo fijo
                           # lambda_l2= 0.0,         #por ahora, lo dejo fijo
-                          max_bin= 31,            #por ahora, lo dejo fijo
+                          max_bin= 20,            #por ahora, lo dejo fijo
                           num_iterations= 9999,   #un numero muy grande, lo limita early_stopping_rounds
                           force_row_wise= TRUE,    #para que los alumnos no se atemoricen con tantos warning
-                          boosting = "rf"
+                          # boosting = "rf"
+                          extra_trees = TRUE
                         )
 
   #el parametro discolo, que depende de otro
