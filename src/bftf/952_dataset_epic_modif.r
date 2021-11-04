@@ -130,13 +130,13 @@ Corregir  <- function( dataset )
   dataset[ foto_mes==201904,  mttarjeta_visa_debitos_automaticos := NA ]
   dataset[ foto_mes==201904,  Visa_mfinanciacion_limite := NA ]
 
+  dataset[ foto_mes==201905,  ctarjeta_visa_debitos_automaticos  := NA ]
+  dataset[ foto_mes==201905,  ccomisiones_otras := NA ]
   dataset[ foto_mes==201905,  mrentabilidad     := NA ]
   dataset[ foto_mes==201905,  mrentabilidad_annual     := NA ]
   dataset[ foto_mes==201905,  mcomisiones      := NA ]
   dataset[ foto_mes==201905,  mpasivos_margen  := NA ]
   dataset[ foto_mes==201905,  mactivos_margen  := NA ]
-  dataset[ foto_mes==201905,  ctarjeta_visa_debitos_automaticos  := NA ]
-  dataset[ foto_mes==201905,  ccomisiones_otras := NA ]
   dataset[ foto_mes==201905,  mcomisiones_otras := NA ]
 
   dataset[ foto_mes==201910,  mpasivos_margen   := NA ]
@@ -199,16 +199,18 @@ Corregir  <- function( dataset )
   dataset[ foto_mes==202006,  tmobile_app   := NA ]
   dataset[ foto_mes==202006,  cmobile_app_trx   := NA ]
 
-
-  dataset[ foto_mes==202010,  internet  := NA ]
-  dataset[ foto_mes==202011,  internet  := NA ]
-  dataset[ foto_mes==202012,  internet  := NA ]
-  dataset[ foto_mes==202101,  internet  := NA ]
-
   dataset[ foto_mes==202009,  tmobile_app  := NA ]
+  
+  dataset[ foto_mes==202010,  internet  := NA ]
   dataset[ foto_mes==202010,  tmobile_app  := NA ]
+  
+  dataset[ foto_mes==202011,  internet  := NA ]
   dataset[ foto_mes==202011,  tmobile_app  := NA ]
+  
+  dataset[ foto_mes==202012,  internet  := NA ]
   dataset[ foto_mes==202012,  tmobile_app  := NA ]
+  
+  dataset[ foto_mes==202101,  internet  := NA ]
   dataset[ foto_mes==202101,  tmobile_app  := NA ]
 
   ReportarCampos( dataset )
