@@ -20,13 +20,13 @@ gc()             #garbage collection
 
 require("data.table")
 require("rlist")
-require("yaml")
+# require("yaml")
 
 require("lightgbm")
 
 #paquetes necesarios para la Bayesian Optimization
-require("DiceKriging")
-require("mlrMBO")
+# require("DiceKriging")
+# require("mlrMBO")
 
 
 #para poder usarlo en la PC y en la nube sin tener que cambiar la ruta
@@ -77,6 +77,7 @@ tb_modelitos  <- dataset[  ,  c("numero_de_cliente","foto_mes"), with=FALSE ]
 fwrite( tb_modelitos, file= kmodelitos, sep= "," )
 
 
+# los parámetros fijos óptimos
 x <- list( "learning_rate"= 0.0289933062436432,
            "feature_fraction"= 0.914142998647527,
            "min_data_in_leaf"= 367,
