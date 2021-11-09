@@ -22,7 +22,7 @@ setwd( directory.root )
 
 palancas  <- list()  #variable con las palancas para activar/desactivar
 
-palancas$version  <- "v952"   #Muy importante, ir cambiando la version
+palancas$version  <- "v953"   #Muy importante, ir cambiando la version
 
 palancas$variablesdrift  <- c()   #aqui van las columnas que se quieren eliminar
 
@@ -34,8 +34,8 @@ palancas$dummiesNA  <-  FALSE #La idea de Santiago Dellachiesa
 
 palancas$lag1   <- TRUE    #lag de orden 1
 palancas$delta1 <- TRUE    # campo -  lag de orden 1 
-palancas$lag2   <- FALSE
-palancas$delta2 <- FALSE
+palancas$lag2   <- TRUE
+palancas$delta2 <- TRUE
 palancas$lag3   <- FALSE
 palancas$delta3 <- FALSE
 palancas$lag4   <- FALSE
@@ -60,7 +60,7 @@ palancas$ratiomean6  <- FALSE   #Un derivado de la idea de Daiana Sparta
 palancas$tendencia6  <- FALSE    #Great power comes with great responsability
 
 
-palancas$canaritosimportancia  <- FALSE  #si me quedo solo con lo mas importante de canaritosimportancia
+palancas$canaritosimportancia  <- TRUE  #si me quedo solo con lo mas importante de canaritosimportancia
 
 
 #escribo para saber cuales fueron los parametros
@@ -579,7 +579,7 @@ CanaritosImportancia  <- function( dataset )
   tb_importancia  <- lgb.importance( model= modelo )
   tb_importancia[  , pos := .I ]
   
-  fwrite( tb_importancia, file="./work/impo.txt",  , sep="\t" )
+  fwrite( tb_importancia, file="./work/impo.txt",  sep="\t" )
   
   umbral  <- tb_importancia[ Feature %like% "canarito", median(pos) - sd(pos) ]
   col_inutiles  <- tb_importancia[ pos >= umbral | Feature %like% "canarito",  Feature ]
