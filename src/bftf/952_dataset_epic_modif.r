@@ -22,7 +22,7 @@ setwd( directory.root )
 
 palancas  <- list()  #variable con las palancas para activar/desactivar
 
-palancas$version  <- "v952"   #Muy importante, ir cambiando la version
+palancas$version  <- "v953"   #Muy importante, ir cambiando la version
 
 palancas$variablesdrift  <- c()   #aqui van las columnas que se quieren eliminar
 
@@ -34,8 +34,8 @@ palancas$dummiesNA  <-  FALSE #La idea de Santiago Dellachiesa
 
 palancas$lag1   <- TRUE    #lag de orden 1
 palancas$delta1 <- TRUE    # campo -  lag de orden 1 
-palancas$lag2   <- FALSE
-palancas$delta2 <- FALSE
+palancas$lag2   <- TRUE
+palancas$delta2 <- TRUE
 palancas$lag3   <- FALSE
 palancas$delta3 <- FALSE
 palancas$lag4   <- FALSE
@@ -127,26 +127,26 @@ Corregir  <- function( dataset )
   dataset[ foto_mes==201806,  ccallcenter_transacciones   :=  NA ]
 
   dataset[ foto_mes==201904,  ctarjeta_visa_debitos_automaticos  :=  NA ]
-  dataset[ foto_mes==201904,  mttarjeta_visa_debitos_automaticos := NA ]
-  dataset[ foto_mes==201904,  Visa_mfinanciacion_limite := NA ]
+  dataset[ foto_mes==201904,  mttarjeta_visa_debitos_automaticos := NA ] #Sí
+  dataset[ foto_mes==201904,  Visa_mfinanciacion_limite := NA ] #Sí
 
   dataset[ foto_mes==201905,  ctarjeta_visa_debitos_automaticos  := NA ]
   dataset[ foto_mes==201905,  ccomisiones_otras := NA ]
-  dataset[ foto_mes==201905,  mrentabilidad     := NA ]
-  dataset[ foto_mes==201905,  mrentabilidad_annual     := NA ]
-  dataset[ foto_mes==201905,  mcomisiones      := NA ]
-  dataset[ foto_mes==201905,  mpasivos_margen  := NA ]
-  dataset[ foto_mes==201905,  mactivos_margen  := NA ]
+  dataset[ foto_mes==201905,  mrentabilidad     := NA ] #Sí
+  dataset[ foto_mes==201905,  mrentabilidad_annual     := NA ] #Sí
+  dataset[ foto_mes==201905,  mcomisiones      := NA ] #Sí
+  dataset[ foto_mes==201905,  mpasivos_margen  := NA ] #Sí
+  dataset[ foto_mes==201905,  mactivos_margen  := NA ] #Sí
   dataset[ foto_mes==201905,  mcomisiones_otras := NA ]
 
-  dataset[ foto_mes==201910,  mpasivos_margen   := NA ]
-  dataset[ foto_mes==201910,  mactivos_margen   := NA ]
+  dataset[ foto_mes==201910,  mpasivos_margen   := NA ] #Sí
+  dataset[ foto_mes==201910,  mactivos_margen   := NA ] #Sí
   dataset[ foto_mes==201910,  ccomisiones_otras := NA ]
   dataset[ foto_mes==201910,  mcomisiones_otras := NA ]
-  dataset[ foto_mes==201910,  mcomisiones       := NA ]
-  dataset[ foto_mes==201910,  mrentabilidad     := NA ]
-  dataset[ foto_mes==201910,  mrentabilidad_annual        := NA ]
-  dataset[ foto_mes==201910,  chomebanking_transacciones  := NA ]
+  dataset[ foto_mes==201910,  mcomisiones       := NA ] #Sí
+  dataset[ foto_mes==201910,  mrentabilidad     := NA ] #Sí
+  dataset[ foto_mes==201910,  mrentabilidad_annual        := NA ] #Sí
+  dataset[ foto_mes==201910,  chomebanking_transacciones  := NA ] #Sí
   dataset[ foto_mes==201910,  ctarjeta_visa_descuentos    := NA ]
   dataset[ foto_mes==201910,  ctarjeta_master_descuentos  := NA ]
   dataset[ foto_mes==201910,  mtarjeta_visa_descuentos    := NA ]
@@ -579,7 +579,7 @@ CanaritosImportancia  <- function( dataset )
   tb_importancia  <- lgb.importance( model= modelo )
   tb_importancia[  , pos := .I ]
   
-  fwrite( tb_importancia, file="./work/impo.txt",  , sep="\t" )
+  fwrite( tb_importancia, file="./work/impo.txt",  sep="\t" )
   
   umbral  <- tb_importancia[ Feature %like% "canarito", median(pos) - sd(pos) ]
   col_inutiles  <- tb_importancia[ pos >= umbral | Feature %like% "canarito",  Feature ]
