@@ -275,11 +275,18 @@ fganancia_lgbm_meseta  <- function(probs, datos)
 }
 #------------------------------------------------------------------------------
 
+# los originales
+# x  <- list( "learning_rate"= 0.02, 
+#             "feature_fraction"= 0.50,
+#             "min_data_in_leaf"= 4000,
+#             "num_leaves"= 600 )
+
 x  <- list( "learning_rate"= 0.03, 
             "feature_fraction"= 0.90,
             "min_data_in_leaf"= 350,
             "num_leaves"= 450  )
 
+# los sacados del E5002_962_35
 # list( "learning_rate"= 0.0289933062436432, 
 #       "feature_fraction"= 0.914142998647527,
 #       "min_data_in_leaf"= 367,
