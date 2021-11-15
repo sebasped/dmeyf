@@ -1,4 +1,3 @@
-#source("~/buckets/b1/crudoB/R/812_dataset_epic.r")
 #Necesita para correr en Google Cloud
 #256 GB de memoria RAM
 #300 GB de espacio en el disco local
@@ -23,20 +22,19 @@ setwd( directory.root )
 
 palancas  <- list()  #variable con las palancas para activar/desactivar
 
-palancas$version  <- "v953"   #Muy importante, ir cambiando la version
+palancas$version  <- "v954"   #Muy importante, ir cambiando la version
 
 palancas$sample  <- 0.05   #Sampleo para tener con qué trabajar localmente
 # Columnas con las que estratificar para sampleo
 palancas$stratifiedcolumns  <- c("clase_ternaria", "foto_mes")
 
-# Aqui van las columnas que se quieren eliminar
-palancas$variablesdrift <- c()
+palancas$variablesdrift  <- c()   #aqui van las columnas que se quieren eliminar
 
 palancas$corregir <-  TRUE    # TRUE o FALSE
 
-palancas$nuevasvars <-  FALSE  #si quiero hacer Feature Engineering manual
+palancas$nuevasvars <-  TRUE  #si quiero hacer Feature Engineering manual
 
-palancas$dummiesNA  <-  FALSE #Idea de Santiago Dellachiesa de UAustral
+palancas$dummiesNA  <-  FALSE #La idea de Santiago Dellachiesa
 
 palancas$lag1   <- TRUE    #lag de orden 1
 palancas$delta1 <- TRUE    # campo -  lag de orden 1
@@ -59,6 +57,9 @@ palancas$minimo6  <- FALSE
 
 palancas$maximo3  <- FALSE  #maximo de los ultimos 3 meses
 palancas$maximo6  <- FALSE
+
+palancas$ratiomax3   <- FALSE   #La idea de Daiana Sparta
+palancas$ratiomean6  <- FALSE   #Un derivado de la idea de Daiana Sparta
 
 palancas$tendencia6  <- FALSE    #Great power comes with great responsability
 
@@ -105,6 +106,7 @@ DummiesNA  <- function( dataset )
   
   ReportarCampos( dataset )
 }
+
 #------------------------------------------------------------------------------
 # Particiona el dataset agrupado
 particionar  <- function( data,  division, agrupa="",  campo="fold", start=1, seed=NA )
@@ -116,6 +118,7 @@ particionar  <- function( data,  division, agrupa="",  campo="fold", start=1, se
   data[ ,  (campo) :=  sample( rep( bloque, ceiling(.N/length(bloque))) )[1:.N],
         by= agrupa ]
 }
+
 #------------------------------------------------------------------------------
 #Corrige poniendo a NA las variables que en ese mes estan dañadas
 
@@ -263,7 +266,7 @@ AgregarVariables  <- function( dataset )
   dataset[ , mv_mlimitecompra        := rowSums( cbind( Master_mlimitecompra,  Visa_mlimitecompra) , na.rm=TRUE ) ]
   dataset[ , mv_madelantopesos       := rowSums( cbind( Master_madelantopesos,  Visa_madelantopesos) , na.rm=TRUE ) ]
   dataset[ , mv_madelantodolares     := rowSums( cbind( Master_madelantodolares,  Visa_madelantodolares) , na.rm=TRUE ) ]
-  #dataset[ , mv_fultimo_cierre       := pmax( Master_fultimo_cierre, Visa_fultimo_cierre, na.rm = TRUE) ]
+  dataset[ , mv_fultimo_cierre       := pmax( Master_fultimo_cierre, Visa_fultimo_cierre, na.rm = TRUE) ]
   dataset[ , mv_mpagado              := rowSums( cbind( Master_mpagado,  Visa_mpagado) , na.rm=TRUE ) ]
   dataset[ , mv_mpagospesos          := rowSums( cbind( Master_mpagospesos,  Visa_mpagospesos) , na.rm=TRUE ) ]
   dataset[ , mv_mpagosdolares        := rowSums( cbind( Master_mpagosdolares,  Visa_mpagosdolares) , na.rm=TRUE ) ]
@@ -367,8 +370,8 @@ AgregarVariables  <- function( dataset )
   nans_qty  <- sum( unlist( nans) )
   if( nans_qty > 0 )
   {
-    cat( "ATENCION, hay", nans_qty, "valores NaN 0/0 en tu dataset. Seran pasados arbitrariamente a NA\n" )
-    #cat( "Si no te gusta la decision, modifica a gusto el programa!\n\n")
+    cat( "ATENCION, hay", nans_qty, "valores NaN 0/0 en tu dataset. Seran pasados arbitrariamente a 0\n" )
+    cat( "Si no te gusta la decision, modifica a gusto el programa!\n\n")
     dataset[mapply(is.nan, dataset)] <- NA
   }
   
@@ -437,6 +440,32 @@ Maximos  <- function( dataset, cols, nhistoria )
   sufijo  <- paste0( "_max", nhistoria )
   
   dataset[ , paste0( cols, sufijo) := frollapply(x=.SD, FUN="max", n=nhistoria, na.rm=TRUE, align="right"),
+           by= numero_de_cliente,
+           .SDcols= cols]
+  
+  ReportarCampos( dataset )
+}
+#------------------------------------------------------------------------------
+#calcula  el ratio entre el valor actual y el maximo de los ultimos nhistoria meses
+
+RatioMax  <- function( dataset, cols, nhistoria )
+{
+  sufijo  <- paste0( "_rmax", nhistoria )
+  
+  dataset[ , paste0( cols, sufijo) := .SD/ frollapply(x=.SD, FUN="max", n=nhistoria, na.rm=TRUE, align="right"),
+           by= numero_de_cliente,
+           .SDcols= cols]
+  
+  ReportarCampos( dataset )
+}
+#------------------------------------------------------------------------------
+#calcula  el ratio entre el valor actual y el promedio de los ultimos nhistoria meses
+
+RatioMean  <- function( dataset, cols, nhistoria )
+{
+  sufijo  <- paste0( "_rmean", nhistoria )
+  
+  dataset[ , paste0( cols, sufijo) := .SD/frollapply(x=.SD, FUN="mean", n=nhistoria, na.rm=TRUE, align="right"),
            by= numero_de_cliente,
            .SDcols= cols]
   
@@ -621,7 +650,7 @@ CanaritosImportancia  <- function( dataset )
   tb_importancia  <- lgb.importance( model= modelo )
   tb_importancia[  , pos := .I ]
   
-  fwrite( tb_importancia, file="./work/impo.txt", sep="\t" )
+  fwrite( tb_importancia, file="./work/impo.txt",  , sep="\t" )
   
   umbral  <- tb_importancia[ Feature %like% "canarito", median(pos) - sd(pos) ]
   col_inutiles  <- tb_importancia[ pos >= umbral | Feature %like% "canarito",  Feature ]
@@ -642,12 +671,6 @@ correr_todo  <- function( palancas )
 {
   #cargo el dataset ORIGINAL
   dataset  <- fread( "./datasetsOri/paquete_premium.csv.gz")
-  #dataset1  <- fread( "./datasetsOri/paquete_premium_202009.csv")
-  #dataset2  <- fread( "./datasetsOri/paquete_premium_202011.csv")
-  
-  #dataset   <- rbind( dataset1, dataset2 )
-  #rm( dataset1, dataset2 )
-  gc()
   
   setorder(  dataset, numero_de_cliente, foto_mes )  #ordeno el dataset
   
@@ -679,6 +702,10 @@ correr_todo  <- function( palancas )
   if( palancas$maximo3 )  Maximos( dataset, cols_analiticas, 3 )
   if( palancas$maximo6 )  Maximos( dataset, cols_analiticas, 6 )
   
+  if(palancas$ratiomax3)  RatioMax(  dataset, cols_analiticas, 3) #La idea de Daiana Sparta
+  if(palancas$ratiomean6) RatioMean( dataset, cols_analiticas, 6) #Derivado de la idea de Daiana Sparta
+  
+  
   if( palancas$tendencia6 )  Tendencia( dataset, cols_analiticas)
   
   
@@ -692,7 +719,7 @@ correr_todo  <- function( palancas )
   
   #Grabo el dataset
   fwrite( dataset,
-          paste0( "./datasets/dataset_epic_", palancas$version, ".csv.gz" ),
+          paste0( "./datasets/dataset_epic_full_", palancas$version, ".csv.gz" ),
           logical01 = TRUE,
           sep= "," )
   
@@ -704,13 +731,13 @@ correr_todo  <- function( palancas )
       seed=86386
     )
     dataset_sample <- dataset[fold==1]
+    dataset_sample[,fold := NULL]
     
     #Grabo el dataset sampleado
     fwrite( dataset_sample,
             paste0( "./datasets/dataset_epic_sample_", (palancas$sample * 100), "%_", palancas$version, ".csv.gz" ),
             logical01 = TRUE,
             sep= "," )
-    
   }
 }
 #------------------------------------------------------------------------------
