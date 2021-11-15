@@ -43,9 +43,9 @@ setwd( directory.root )
 
 kexperimento  <- NA   #NA si se corre la primera vez, un valor concreto si es para continuar procesando
 
-kscript         <- "962_epic"
+kscript         <- "964_epic"
 
-karch_dataset    <- "./datasets/dataset_epic_v952.csv.gz"
+karch_dataset    <- "./datasets/dataset_epic_v954.csv.gz"
 
 kapply_mes       <- c(202101)  #El mes donde debo aplicar el modelo
 
@@ -63,14 +63,15 @@ kgen_mes_hasta    <- 202011   #La generacion final para Kaggle, sin undersamplin
 kgen_mes_desde    <- 201901
 
 
-kBO_iter    <-  100   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  500   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 #Aqui se cargan los hiperparametros
 hs <- makeParamSet( 
-         makeNumericParam("learning_rate",    lower=    0.02 , upper=    0.1),
-         makeNumericParam("feature_fraction", lower=    0.1  , upper=    1.0),
+         makeNumericParam("learning_rate",    lower=    0.02 , upper= 0.1),
+         makeNumericParam("feature_fraction", lower=    0.1  , upper= 1.0),
          makeIntegerParam("min_data_in_leaf", lower=  200L   , upper= 8000L),
-         makeIntegerParam("num_leaves",       lower=  100L   , upper= 1024L)
+         makeIntegerParam("num_leaves",       lower=  100L   , upper= 1024L),
+         makeNumericParam("lambda_l1",        lower=    0.0  , upper= 1000.0)
         )
 
 campos_malos  <- c()   #aqui se deben cargar todos los campos culpables del Data Drifting
@@ -310,7 +311,7 @@ EstimarGanancia_lightgbm  <- function( x )
                           seed= 999983,
                           max_depth=  -1,         # -1 significa no limitar,  por ahora lo dejo fijo
                           min_gain_to_split= 0.0, #por ahora, lo dejo fijo
-                          lambda_l1= 0.0,         #por ahora, lo dejo fijo
+                          # lambda_l1= 0.0,         #por ahora, lo dejo fijo
                           lambda_l2= 0.0,         #por ahora, lo dejo fijo
                           max_bin= 31,            #por ahora, lo dejo fijo
                           num_iterations= 9999,   #un numero muy grande, lo limita early_stopping_rounds
@@ -354,7 +355,7 @@ EstimarGanancia_lightgbm  <- function( x )
   {
     GLOBAL_ganancia_max  <<- ganancia  #asigno la nueva maxima ganancia a una variable GLOBAL, por eso el <<-
 
-    if( GLOBAL_iteracion > 30 )
+    if( GLOBAL_iteracion > 20 )
     {
       FullModelo( param_final )
       HemiModelos( param_final )
