@@ -719,7 +719,7 @@ correr_todo  <- function( palancas )
   
   #Grabo el dataset
   fwrite( dataset,
-          paste0( "./datasets/dataset_epic_full_", palancas$version, ".csv.gz" ),
+          paste0( "./datasets/dataset_epic_", palancas$version, ".csv.gz" ),
           logical01 = TRUE,
           sep= "," )
   
