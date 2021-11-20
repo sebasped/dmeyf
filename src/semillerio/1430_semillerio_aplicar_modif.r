@@ -24,11 +24,11 @@ kcantidad_semillas  <- 200
 #ATENCION
 #aqui deben ir los mejores valores que salieron de la optimizacion bayesiana
 x  <- list()
-x$gleaf_size   <-  
-x$gnum_leaves  <-  
-x$learning_rate <-  
-x$feature_fraction <-  
-x$num_iterations  <- 
+x$gleaf_size   <-  61.6871157651185
+x$gnum_leaves  <-  0.260698197233796
+x$learning_rate <-  0.0325265858251271
+x$feature_fraction <-  0.646776892910132
+x$num_iterations  <- 652 #original 651.8
 
 #------------------------------------------------------------------------------
 
@@ -160,3 +160,18 @@ for( semilla in  ksemillas)
 
 }
 
+
+
+
+#apagado de la maquina virtual, pero NO se borra
+system( "sleep 10  &&  sudo shutdown -h now", wait=FALSE)
+
+#suicidio,  elimina la maquina virtual directamente
+#system( "sleep 10  && 
+#        export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/name -H 'Metadata-Flavor: Google') &&
+#        export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google') &&
+#        gcloud --quiet compute instances delete $NAME --zone=$ZONE",
+#        wait=FALSE )
+
+
+quit( save="no" )
