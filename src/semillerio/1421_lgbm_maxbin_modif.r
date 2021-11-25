@@ -423,3 +423,17 @@ if(!file.exists(kbayesiana)) {
 
 
 #-------------------------------------------------------
+
+
+#apagado de la maquina virtual, pero NO se borra
+system( "sleep 10  &&  sudo shutdown -h now", wait=FALSE)
+
+#suicidio,  elimina la maquina virtual directamente
+#system( "sleep 10  && 
+#        export NAME=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/name -H 'Metadata-Flavor: Google') &&
+#        export ZONE=$(curl -X GET http://metadata.google.internal/computeMetadata/v1/instance/zone -H 'Metadata-Flavor: Google') &&
+#        gcloud --quiet compute instances delete $NAME --zone=$ZONE",
+#        wait=FALSE )
+
+
+quit( save="no" )
