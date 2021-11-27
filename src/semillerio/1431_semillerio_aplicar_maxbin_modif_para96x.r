@@ -44,7 +44,7 @@ x$num_leaves        <- 455
 
 get_experimento  <- function()
 {
-  if( !file.exists( "./maestro.yaml" ) )  cat( file="./maestro.yaml", "experimento: 6000" )
+  if( !file.exists( "./maestro.yaml" ) )  cat( file="./maestro.yaml", "experimento: 1000" )
 
   exp  <- read_yaml( "./maestro.yaml" )
   experimento_actual  <- exp$experimento
@@ -109,7 +109,7 @@ kgen_mes_desde    <- 202001
 dataset[    foto_mes>= kgen_mes_desde  &
               foto_mes<= kgen_mes_hasta & 
               !( foto_mes %in% ktrain_meses_malos ),
-            generacion_final:= 1L ]
+            generacion:= 1L ]
 # dataset[  foto_mes>=202001 & foto_mes<=202011, generacion := 1L ]
 
 

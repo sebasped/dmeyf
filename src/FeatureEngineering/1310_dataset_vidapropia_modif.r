@@ -30,23 +30,23 @@ palancas$corregir <-  TRUE    # TRUE o FALSE
 
 palancas$nuevasvars <-  TRUE  #si quiero hacer Feature Engineering manual
 
-palancas$dummiesNA  <-  TRUE #La idea de Santiago Dellachiesa
+palancas$dummiesNA  <-  FALSE #La idea de Santiago Dellachiesa
 
 palancas$lag1   <- TRUE    #lag de orden 1
 palancas$delta1 <- TRUE    # campo -  lag de orden 1 
-palancas$lag2   <- TRUE
-palancas$delta2 <- TRUE
+palancas$lag2   <- FALSE
+palancas$delta2 <- FALSE
 palancas$lag3   <- TRUE
 palancas$delta3 <- TRUE
-palancas$lag4   <- TRUE
-palancas$delta4 <- TRUE
-palancas$lag5   <- TRUE
-palancas$delta5 <- TRUE
+palancas$lag4   <- FALSE
+palancas$delta4 <- FALSE
+palancas$lag5   <- FALSE
+palancas$delta5 <- FALSE
 palancas$lag6   <- TRUE
 palancas$delta6 <- TRUE
 
 
-palancas$tendenciaYmuchomas  <- TRUE    #Great power comes with great responsability
+palancas$tendenciaYmuchomas  <- FALSE    #Great power comes with great responsability
 
 
 palancas$canaritosimportancia  <- TRUE  #si me quedo solo con lo mas importante de canaritosimportancia
