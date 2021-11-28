@@ -1,3 +1,11 @@
+# DEL 1430
+#Este script necesita
+# 128 GB de memoria RAM
+# 256 GB de espacio en disco
+# 8 vCPU
+
+
+
 #limpio la memoria
 rm( list=ls() )  #remove all objects
 gc()             #garbage collection
@@ -14,7 +22,9 @@ require("lightgbm")
 setwd("~/buckets/b1/")
 
 # karch_dataset  <- "./datasets/semillerio_dataset_lag1.csv.gz"
-karch_dataset   <-  "./datasets/canaproxy_vidapropia_01.csv.gz"
+# karch_dataset   <-  "./datasets/canaproxy_vidapropia_01.csv.gz"
+karch_dataset    <- "./datasets/dataset_epic_v955.csv.gz"
+
 ksalida  <- "semillerio" 
 
 
