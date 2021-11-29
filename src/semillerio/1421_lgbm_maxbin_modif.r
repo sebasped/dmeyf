@@ -56,12 +56,15 @@ kexperimento  <- NA #NA si se corre la primera vez, un valor concreto si es para
 
 kscript       <- "1421_lgbm_maxbin"
 
-karchivo_dataset   <-  "./datasets/dataset_epic_v955.csv.gz"
+# karchivo_dataset   <-  "./datasets/dataset_epic_v955.csv.gz"
+karchivo_dataset   <-  "./datasets/canaproxy_vidapropia_03.csv.gz"
 
 kfecha_cutoff  <- 202001
 ktrain_desde   <- 202001
 ktrain_hasta   <- 202009
 
+ktrain_meses_malos  <- c( 202003, 202004, 202005, 202006 )  #meses que quiero excluir del entrenamiento
+# ktrain_meses_malos  <- c( 202006 )  #meses que quiero excluir del entrenamiento
 
 kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
 
@@ -386,9 +389,11 @@ campos_buenos  <- setdiff( colnames(dataset), c("clase_ternaria","clase01", "fol
 
 #undersampling para training
 dataset[  , train := 0L ]
-dataset[  foto_mes>=ktrain_desde & foto_mes<=ktrain_hasta &
-          (clase01==1  | subsampling==1),
-          train := 1L ]
+# dataset[  foto_mes>=ktrain_desde & foto_mes<=ktrain_hasta &
+          # (clase01==1  | subsampling==1),
+          # train := 1L ]
+dataset[  foto_mes>= ktrain_desde  & foto_mes<= ktrain_hasta &  !( foto_mes %in% ktrain_meses_malos ) &
+            (clase01==1  | subsampling==1), train := 1L ]
 
 
 #Aqui comienza la configuracion de la Bayesian Optimization
