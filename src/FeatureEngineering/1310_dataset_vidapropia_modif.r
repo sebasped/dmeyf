@@ -22,7 +22,7 @@ setwd( directory.root )
 
 palancas  <- list()  #variable con las palancas para activar/desactivar
 
-palancas$version  <- "vidapropia_01"   #Muy importante, ir cambiando la version
+palancas$version  <- "vidapropia_03"   #Muy importante, ir cambiando la version
 
 palancas$variablesdrift  <- c()   #aqui van las columnas que se quieren eliminar
 
@@ -50,6 +50,15 @@ palancas$tendenciaYmuchomas  <- FALSE    #Great power comes with great responsab
 
 
 palancas$canaritosimportancia  <- TRUE  #si me quedo solo con lo mas importante de canaritosimportancia
+
+
+
+
+palancas$range <- TRUE
+
+
+
+
 
 
 #escribo para saber cuales fueron los parametros
@@ -531,6 +540,29 @@ CanaritosImportancia  <- function( canaritos_ratio=0.2 )
 
   ReportarCampos( dataset )
 }
+
+
+
+
+
+
+
+
+Rango <- function( dataset, cols )
+{
+  dataset[ , paste0( cols, "_rango") := lapply( .SD, frankv, na.last="keep", ties.method="dense" ),
+           by= foto_mes, .SDcols= cols]
+  
+  ReportarCampos( dataset )
+}
+
+
+
+
+
+
+
+
 #------------------------------------------------------------------------------
 
 #Aqui empieza el programa
@@ -549,6 +581,24 @@ if( palancas$dummiesNA )  DummiesNA( dataset )  #esta linea debe ir ANTES de Cor
 if( palancas$corregir )  Corregir( dataset )  #esta linea debe ir DESPUES de  DummiesNA
 
 if( palancas$nuevasvars )  AgregarVariables( dataset )
+
+
+
+
+
+
+cols_range <- c("ctrx_quarter","mcuenta_corriente_delta6","mdescubierto_preacordado_delta6","mtarjeta_visa_consumo",
+                "cpayroll_trx","mpasivos_margen","mpayroll","mcuentas_saldo",
+                "ctarjeta_visa_transacciones","mcaja_ahorro","cproductos_delta3","mprestamos_personales",
+                "mprestamos_personales_delta3","cproductos_delta1","mcomisiones_mantenimiento_delta6","mautoservicio",
+                "mactivos_margen","cproductos","mv_status04_delta3")
+# cols_analiticas  <- copy( setdiff( cols_range,  c("numero_de_cliente","foto_mes","mes","clase_ternaria") ) )
+if( palancas$range) Rango( dataset, cols_range)
+
+
+
+
+
 
 
 #--------------------------------------
@@ -621,7 +671,7 @@ fwrite( dataset,
 
 
 #apagado de la maquina virtual, pero NO se borra
-system( "sleep 10  &&  sudo shutdown -h now", wait=FALSE)
+# system( "sleep 10  &&  sudo shutdown -h now", wait=FALSE)
 
 #suicidio,  elimina la maquina virtual directamente
 #system( "sleep 10  && 
@@ -631,4 +681,4 @@ system( "sleep 10  &&  sudo shutdown -h now", wait=FALSE)
 #        wait=FALSE )
 
 
-quit( save="no" )
+# quit( save="no" )
