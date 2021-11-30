@@ -6,7 +6,8 @@ require("randomForest")
 rm( list=ls() )  #remove all objects
 gc()             #garbage collection
 
-setwd( "~/buckets/b1/" )
+# setwd( "~/buckets/b1/" )
+setwd("~/dataScience/maestriaDC/2021/DM_en_EyF_2021cuat2/")  #Establezco el Working Directory
 
 #leo el dataset , aqui se puede usar algun super dataset con Feature Engineering
 dataset  <- fread( "datasetsOri/paquete_premium.csv.gz", stringsAsFactors= TRUE)
@@ -75,4 +76,7 @@ dataset[  , .N,  cluster2 ]  #tamaño de los clusters
 #ahora a mano veo las variables
 dataset[  , mean(ctrx_quarter),  cluster2 ]  #media de la variable  ctrx_quarter
 
-
+version <- 1
+fwrite( dataset, 
+        file=  paste0( "./work/dataset_cluster_" , version, ".csv" ),  
+        sep= "," )
